@@ -142,7 +142,7 @@
   - _Leverage: gui.py_
   - _Requirements: REQ-002 AC-3, REQ-002 AC-4, REQ-003 AC-1, REQ-003 AC-4_
 
-- [ ] 8. 實作 OCRApp 的剪貼簿複製功能於 gui.py
+- [x] 8. 實作 OCRApp 的剪貼簿複製功能於 gui.py
   - File: `gui.py`（延續 task 7）
   - 實作 `copy_to_clipboard()`：
     - 取得 Text widget 文字：`text = self.text_area.get("1.0", tk.END).strip()`
@@ -154,7 +154,7 @@
   - _Leverage: gui.py_
   - _Requirements: REQ-003 AC-2, REQ-003 AC-3_
 
-- [ ] 9. 建立 main.py 應用程式進入點
+- [x] 9. 建立 main.py 應用程式進入點
   - File: `main.py`
   - 匯入：`import tkinter as tk`, `from gui import OCRApp`
   - 建立 `main()` 函式：
@@ -166,7 +166,7 @@
   - _Leverage: gui.py_
   - _Requirements: Usability NFR_
 
-- [ ] 10. 撰寫 README.md 含完整環境設定與使用說明
+- [x] 10. 撰寫 README.md 含完整環境設定與使用說明
   - File: `README.md`
   - 撰寫以下內容（繁體中文）：
     - 專案簡介：OCR 文字辨識桌面工具

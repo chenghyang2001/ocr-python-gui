@@ -220,5 +220,14 @@ class OCRApp:
         self.is_processing = False
 
     def copy_to_clipboard(self) -> None:
-        """將文字區域內容複製到系統剪貼簿（待後續任務實作）"""
-        pass
+        """將文字區域內容複製到系統剪貼簿
+
+        從 Text widget 取得文字內容，若非空白則清除剪貼簿並寫入文字，
+        同時更新狀態列顯示複製成功訊息。
+        """
+        text = self.text_area.get("1.0", tk.END).strip()
+        if not text:
+            return
+        self.root.clipboard_clear()
+        self.root.clipboard_append(text)
+        self._update_status("已複製！")
