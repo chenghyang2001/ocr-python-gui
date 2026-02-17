@@ -43,7 +43,7 @@
   - Purpose: 建立專案基礎配置檔案
   - _Requirements: Constraints NFR_
 
-- [ ] 2. 建立 OCREngine 類別核心結構於 ocr_engine.py
+- [x] 2. 建立 OCREngine 類別核心結構於 ocr_engine.py
   - File: `ocr_engine.py`
   - 匯入：`from PIL import Image`、`import pytesseract`
   - 建立 `OCREngine` 類別

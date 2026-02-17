@@ -1,0 +1,75 @@
+"""OCR 引擎模組
+
+封裝所有 OCR 相關的處理邏輯，包含圖片載入、驗證與文字辨識。
+使用 pytesseract 作為 Tesseract OCR 的 Python 綁定，
+使用 Pillow (PIL) 處理圖片載入與格式驗證。
+"""
+
+from PIL import Image
+import pytesseract
+import os
+
+
+class OCREngine:
+    """OCR 引擎類別
+
+    提供圖片載入、驗證與 OCR 文字辨識功能。
+    初始化時自動檢查 Tesseract 是否已安裝且可用。
+    """
+
+    SUPPORTED_FORMATS = ('.png', '.jpg', '.jpeg', '.bmp', '.tiff')
+
+    def __init__(self) -> None:
+        """初始化 OCR 引擎，檢查 Tesseract 是否可用
+
+        透過呼叫 pytesseract.get_tesseract_version() 檢測
+        Tesseract 是否已安裝且可正常運作。
+        """
+        try:
+            pytesseract.get_tesseract_version()
+            self._available: bool = True
+        except Exception:
+            self._available: bool = False
+
+    def is_available(self) -> bool:
+        """檢查 Tesseract 是否已安裝且可用
+
+        Returns:
+            bool: True 表示 Tesseract 可用，False 表示不可用
+        """
+        return self._available
+
+    def load_image(self, file_path: str) -> Image.Image:
+        """載入並驗證圖片檔案，回傳 PIL Image 物件
+
+        先驗證檔案副檔名是否為支援的格式，再使用 Pillow 開啟並驗證
+        圖片完整性，最後重新開啟以取得可用的 Image 物件。
+
+        Args:
+            file_path: 圖片檔案的路徑
+
+        Returns:
+            Image.Image: 已驗證且可用的 PIL Image 物件
+
+        Raises:
+            ValueError: 檔案格式不支援（副檔名不在 SUPPORTED_FORMATS 中）
+            FileNotFoundError: 檔案不存在
+            IOError: 圖片檔案損壞或無法讀取
+        """
+        # 驗證檔案副檔名是否在支援的格式中（不分大小寫）
+        _, ext = os.path.splitext(file_path)
+        if ext.lower() not in self.SUPPORTED_FORMATS:
+            raise ValueError(f"不支援的檔案格式：{ext}")
+
+        try:
+            # 使用 Image.open 載入並呼叫 verify() 驗證圖片完整性
+            img = Image.open(file_path)
+            img.verify()
+
+            # verify() 後 Image 物件不可再使用，需重新開啟
+            img = Image.open(file_path)
+            return img
+        except FileNotFoundError:
+            raise
+        except Exception as e:
+            raise IOError(f"無法載入圖片：{e}")
