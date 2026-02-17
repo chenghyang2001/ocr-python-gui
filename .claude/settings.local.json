@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npx claude-code-spec-workflow:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(python:*)"
     ]
   }
 }

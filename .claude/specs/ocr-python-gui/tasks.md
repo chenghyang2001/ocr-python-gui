@@ -58,7 +58,7 @@
   - Purpose: 建立 OCR 引擎的圖片載入與驗證功能
   - _Requirements: REQ-001 AC-2, REQ-001 AC-3, Reliability NFR_
 
-- [ ] 3. 實作 OCREngine 的 OCR 辨識方法於 ocr_engine.py
+- [x] 3. 實作 OCREngine 的 OCR 辨識方法於 ocr_engine.py
   - File: `ocr_engine.py`（延續 task 2）
   - 實作 `perform_ocr(image: Image.Image, lang: str = 'chi_tra+eng') -> str`：
     - 呼叫 `pytesseract.image_to_string(image, lang=lang)`

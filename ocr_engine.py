@@ -73,3 +73,25 @@ class OCREngine:
             raise
         except Exception as e:
             raise IOError(f"無法載入圖片：{e}")
+
+    def perform_ocr(self, image: Image.Image, lang: str = 'chi_tra+eng') -> str:
+        """對圖片執行 OCR 辨識，回傳辨識出的文字
+
+        使用 pytesseract 呼叫 Tesseract OCR 引擎，對給定的 PIL Image
+        物件進行文字辨識。預設語言設定為繁體中文加英文。
+
+        Args:
+            image: 已載入的 PIL Image 物件
+            lang: Tesseract 語言參數，預設為 'chi_tra+eng'（繁體中文+英文）
+
+        Returns:
+            str: 辨識出的文字（已去除前後空白），若未偵測到文字則回傳空字串
+
+        Raises:
+            RuntimeError: OCR 辨識過程中發生錯誤
+        """
+        try:
+            result = pytesseract.image_to_string(image, lang=lang)
+            return result.strip()
+        except pytesseract.TesseractError as e:
+            raise RuntimeError(f"OCR 辨識失敗：{e}")
