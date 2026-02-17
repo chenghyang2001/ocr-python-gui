@@ -4,7 +4,22 @@
       "Bash(npx claude-code-spec-workflow:*)",
       "Bash(dir:*)",
       "Bash(python:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(cmd.exe //c run.bat)",
+      "Bash(cmd.exe /c \"run.bat\")",
+      "Bash(tesseract:*)",
+      "Bash(./venv/Scripts/pip install:*)",
+      "Bash(./venv/Scripts/python:*)",
+      "Bash(winget --version:*)",
+      "Bash(winget install:*)",
+      "Bash(export PATH=\"/c/Program Files/Tesseract-OCR:$PATH\")",
+      "Bash(\"/c/Program Files/Tesseract-OCR/tesseract.exe\" --version)",
+      "Bash(\"/c/Program Files/Tesseract-OCR/tesseract.exe\" --list-langs)",
+      "Bash(powershell -Command \"[Environment]::SetEnvironmentVariable\\(''Path'', [Environment]::GetEnvironmentVariable\\(''Path'', ''User''\\) + '';C:\\\\Program Files\\\\Tesseract-OCR'', ''User''\\)\")",
+      "Bash(curl:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(tr:*)",
+      "mcp__chrome-devtools__take_screenshot"
     ]
   }
 }

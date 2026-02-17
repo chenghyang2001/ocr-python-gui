@@ -20,16 +20,52 @@ class OCREngine:
     SUPPORTED_FORMATS = ('.png', '.jpg', '.jpeg', '.bmp', '.tiff')
 
     def __init__(self) -> None:
-        """初始化 OCR 引擎，檢查 Tesseract 是否可用
+        """初始化 OCR 引擎，自動偵測 Tesseract 路徑並檢查是否可用
 
-        透過呼叫 pytesseract.get_tesseract_version() 檢測
-        Tesseract 是否已安裝且可正常運作。
+        先嘗試在常見安裝路徑中尋找 Tesseract 執行檔，
+        找到後設定 pytesseract.tesseract_cmd，
+        再透過 pytesseract.get_tesseract_version() 檢測是否可正常運作。
         """
+        self._auto_detect_tesseract()
         try:
             pytesseract.get_tesseract_version()
             self._available: bool = True
         except Exception:
             self._available: bool = False
+
+    @staticmethod
+    def _auto_detect_tesseract() -> None:
+        """自動偵測 Tesseract 執行檔路徑並設定 pytesseract.tesseract_cmd
+
+        依序檢查：
+        1. 系統 PATH 中是否已可直接呼叫
+        2. Windows 常見安裝路徑
+        3. 環境變數 TESSERACT_PATH
+        """
+        import shutil
+        import platform
+
+        # 若 PATH 中已可找到，直接返回
+        if shutil.which('tesseract'):
+            return
+
+        # Windows 常見安裝路徑
+        if platform.system() == 'Windows':
+            common_paths = [
+                r'C:\Program Files\Tesseract-OCR\tesseract.exe',
+                r'C:\Program Files (x86)\Tesseract-OCR\tesseract.exe',
+                os.path.expandvars(r'%LOCALAPPDATA%\Tesseract-OCR\tesseract.exe'),
+                os.path.expandvars(r'%LOCALAPPDATA%\Programs\Tesseract-OCR\tesseract.exe'),
+            ]
+            for path in common_paths:
+                if os.path.isfile(path):
+                    pytesseract.pytesseract.tesseract_cmd = path
+                    return
+
+        # 檢查環境變數 TESSERACT_PATH
+        env_path = os.environ.get('TESSERACT_PATH')
+        if env_path and os.path.isfile(env_path):
+            pytesseract.pytesseract.tesseract_cmd = env_path
 
     def is_available(self) -> bool:
         """檢查 Tesseract 是否已安裝且可用
