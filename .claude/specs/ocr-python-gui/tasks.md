@@ -107,7 +107,7 @@
   - _Leverage: gui.py, ocr_engine.py_
   - _Requirements: REQ-001 AC-1, REQ-001 AC-2, REQ-001 AC-3, REQ-001 AC-4_
 
-- [ ] 6. 實作 OCRApp 的 OCR 啟動與背景執行緒於 gui.py
+- [x] 6. 實作 OCRApp 的 OCR 啟動與背景執行緒於 gui.py
   - File: `gui.py`（延續 task 5）
   - 實作 `start_ocr()`：
     - 檢查 `self.engine.is_available()`，不可用時彈出 `messagebox.showerror` 含安裝說明與連結 `https://github.com/UB-Mannheim/tesseract/wiki`

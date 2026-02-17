@@ -147,8 +147,38 @@ class OCRApp:
         self.preview_label.config(image=self.preview_photo, text="")
 
     def start_ocr(self) -> None:
-        """啟動背景執行緒執行 OCR 辨識（待後續任務實作）"""
-        pass
+        """啟動背景執行緒執行 OCR 辨識
+
+        檢查 OCR 引擎是否可用，若可用則停用按鈕、清空文字區域，
+        並啟動背景執行緒執行辨識，避免阻塞 GUI 主執行緒。
+        """
+        if not self.engine.is_available():
+            messagebox.showerror(
+                "錯誤",
+                "未偵測到 Tesseract OCR 引擎。\n\n請至以下網址下載安裝：\nhttps://github.com/UB-Mannheim/tesseract/wiki",
+            )
+            return
+
+        self.is_processing = True
+        self.select_btn.config(state=tk.DISABLED)
+        self.ocr_btn.config(state=tk.DISABLED)
+        self.copy_btn.config(state=tk.DISABLED)
+        self.text_area.delete("1.0", tk.END)
+        self._update_status("辨識中...")
+        threading.Thread(target=self._run_ocr_thread, daemon=True).start()
+
+    def _run_ocr_thread(self) -> None:
+        """在背景執行緒中執行 OCR 辨識
+
+        呼叫 OCREngine.perform_ocr 進行文字辨識，完成後透過
+        self.root.after 將結果回傳至主執行緒更新 GUI，
+        確保不會在背景執行緒中直接操作 tkinter 元件。
+        """
+        try:
+            result = self.engine.perform_ocr(self.current_image)
+            self.root.after(0, self._on_ocr_complete, result)
+        except Exception as e:
+            self.root.after(0, self._on_ocr_error, str(e))
 
     def copy_to_clipboard(self) -> None:
         """將文字區域內容複製到系統剪貼簿（待後續任務實作）"""

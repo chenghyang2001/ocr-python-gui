@@ -3,7 +3,8 @@
     "allow": [
       "Bash(npx claude-code-spec-workflow:*)",
       "Bash(dir:*)",
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Bash(echo:*)"
     ]
   }
 }
