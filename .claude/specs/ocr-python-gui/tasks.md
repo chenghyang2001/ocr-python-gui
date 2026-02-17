@@ -124,7 +124,7 @@
   - _Leverage: gui.py_
   - _Requirements: REQ-002 AC-1, REQ-002 AC-2, Performance NFR_
 
-- [ ] 7. 實作 OCRApp 的 OCR 結果處理與錯誤回調於 gui.py
+- [x] 7. 實作 OCRApp 的 OCR 結果處理與錯誤回調於 gui.py
   - File: `gui.py`（延續 task 6）
   - 實作 `_on_ocr_complete(result: str)`：
     - 清空 Text widget 後插入結果

@@ -180,6 +180,45 @@ class OCRApp:
         except Exception as e:
             self.root.after(0, self._on_ocr_error, str(e))
 
+    def _on_ocr_complete(self, result: str) -> None:
+        """處理 OCR 辨識完成的結果回調
+
+        由 _run_ocr_thread 透過 self.root.after(0, ...) 在主執行緒中呼叫。
+        根據辨識結果更新文字區域、按鈕狀態與狀態列。
+
+        Args:
+            result: OCR 辨識結果文字，可能為空字串
+        """
+        self.text_area.delete("1.0", tk.END)
+        if result:
+            self.text_area.insert("1.0", result)
+            self.copy_btn.config(state=tk.NORMAL)
+            self._update_status("辨識完成")
+        else:
+            self.text_area.insert("1.0", "未偵測到文字")
+            self.copy_btn.config(state=tk.DISABLED)
+            self._update_status("未偵測到文字")
+        self.select_btn.config(state=tk.NORMAL)
+        self.ocr_btn.config(state=tk.NORMAL)
+        self.is_processing = False
+
+    def _on_ocr_error(self, error_msg: str) -> None:
+        """處理 OCR 辨識失敗的錯誤回調
+
+        由 _run_ocr_thread 透過 self.root.after(0, ...) 在主執行緒中呼叫。
+        顯示錯誤訊息並恢復按鈕狀態。
+
+        Args:
+            error_msg: 錯誤訊息文字
+        """
+        self.text_area.delete("1.0", tk.END)
+        self.text_area.insert("1.0", error_msg)
+        self.copy_btn.config(state=tk.DISABLED)
+        self.select_btn.config(state=tk.NORMAL)
+        self.ocr_btn.config(state=tk.NORMAL)
+        self._update_status("辨識失敗")
+        self.is_processing = False
+
     def copy_to_clipboard(self) -> None:
         """將文字區域內容複製到系統剪貼簿（待後續任務實作）"""
         pass
