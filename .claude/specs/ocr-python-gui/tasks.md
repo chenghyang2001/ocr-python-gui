@@ -68,7 +68,7 @@
   - _Leverage: ocr_engine.py_
   - _Requirements: REQ-002 AC-3, REQ-002 AC-4, REQ-002 AC-5_
 
-- [ ] 4. 建立 OCRApp GUI 基礎框架於 gui.py
+- [x] 4. 建立 OCRApp GUI 基礎框架於 gui.py
   - File: `gui.py`
   - 匯入：`import tkinter as tk`, `from tkinter import filedialog, messagebox`, `from PIL import ImageTk, Image`, `import threading`, `from ocr_engine import OCREngine`
   - 建立 `OCRApp` 類別
