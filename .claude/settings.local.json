@@ -19,7 +19,8 @@
       "Bash(curl:*)",
       "Bash(powershell -Command:*)",
       "Bash(tr:*)",
-      "mcp__chrome-devtools__take_screenshot"
+      "mcp__chrome-devtools__take_screenshot",
+      "Bash(./venv/Scripts/pyinstaller:*)"
     ]
   }
 }
