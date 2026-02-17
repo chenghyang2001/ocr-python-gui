@@ -86,7 +86,7 @@
   - _Leverage: ocr_engine.py_
   - _Requirements: REQ-001 AC-1, REQ-003 AC-4, Usability NFR_
 
-- [ ] 5. 實作 OCRApp 的圖片選擇與預覽功能於 gui.py
+- [x] 5. 實作 OCRApp 的圖片選擇與預覽功能於 gui.py
   - File: `gui.py`（延續 task 4）
   - 實作 `select_image()`：
     - 呼叫 `filedialog.askopenfilename(filetypes=[("圖片檔案", "*.png *.jpg *.jpeg *.bmp *.tiff"), ("所有檔案", "*.*")])`

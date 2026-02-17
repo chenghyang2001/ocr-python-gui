@@ -103,8 +103,48 @@ class OCRApp:
         self.status_label.config(text=message)
 
     def select_image(self) -> None:
-        """開啟檔案選擇對話框，載入並預覽圖片（待後續任務實作）"""
-        pass
+        """開啟檔案選擇對話框，載入並預覽圖片
+
+        透過 filedialog 讓使用者選擇圖片檔案，使用 OCREngine 載入圖片，
+        並在預覽區域顯示縮圖。載入成功後啟用 OCR 按鈕。
+
+        支援格式：PNG、JPG、JPEG、BMP、TIFF
+        """
+        file_path = filedialog.askopenfilename(
+            filetypes=[("圖片檔案", "*.png *.jpg *.jpeg *.bmp *.tiff"), ("所有檔案", "*.*")]
+        )
+        if not file_path:
+            return
+
+        try:
+            image = self.engine.load_image(file_path)
+        except ValueError:
+            messagebox.showerror("錯誤", "不支援的檔案格式")
+            return
+        except (FileNotFoundError, IOError):
+            messagebox.showerror("錯誤", "無法載入圖片")
+            return
+
+        self.current_image = image
+        self._resize_preview_image(image)
+        self.ocr_btn.config(state=tk.NORMAL)
+        self._update_status("圖片已載入")
+
+    def _resize_preview_image(self, image: Image.Image, max_width: int = 550, max_height: int = 300) -> None:
+        """將圖片縮放至預覽尺寸並更新預覽 Label
+
+        使用 thumbnail 方法等比例縮放圖片，確保不超過最大寬高限制，
+        並保持對 PhotoImage 的參考以避免垃圾回收。
+
+        Args:
+            image: 要預覽的 PIL Image 物件
+            max_width: 預覽區域最大寬度（預設 550 像素）
+            max_height: 預覽區域最大高度（預設 300 像素）
+        """
+        preview = image.copy()
+        preview.thumbnail((max_width, max_height), Image.LANCZOS)
+        self.preview_photo = ImageTk.PhotoImage(preview)
+        self.preview_label.config(image=self.preview_photo, text="")
 
     def start_ocr(self) -> None:
         """啟動背景執行緒執行 OCR 辨識（待後續任務實作）"""
