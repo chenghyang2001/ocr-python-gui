@@ -52,6 +52,14 @@ class OCRApp:
         )
         self.ocr_btn.pack(side=tk.LEFT, padx=5)
 
+        self.copy_btn = tk.Button(
+            btn_frame,
+            text="複製到剪貼簿",
+            command=self.copy_to_clipboard,
+            state=tk.DISABLED,
+        )
+        self.copy_btn.pack(side=tk.LEFT, padx=5)
+
         # === 圖片預覽區域 ===
         self.preview_label = tk.Label(root, text="請選擇圖片", bg="#f0f0f0")
         self.preview_label.pack(expand=True, fill=tk.BOTH, padx=5, pady=5)
@@ -74,20 +82,9 @@ class OCRApp:
         self.text_area.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.text_area.yview)
 
-        # === 底部 Frame ===
-        bottom_frame = tk.Frame(root)
-        bottom_frame.pack(side=tk.BOTTOM, fill=tk.X, padx=5, pady=5)
-
-        self.copy_btn = tk.Button(
-            bottom_frame,
-            text="複製到剪貼簿",
-            command=self.copy_to_clipboard,
-            state=tk.DISABLED,
-        )
-        self.copy_btn.pack(side=tk.LEFT, padx=5)
-
-        self.status_label = tk.Label(bottom_frame, text="就緒")
-        self.status_label.pack(side=tk.RIGHT, padx=5)
+        # === 底部狀態列 ===
+        self.status_label = tk.Label(root, text="就緒", anchor=tk.E)
+        self.status_label.pack(side=tk.BOTTOM, fill=tk.X, padx=5, pady=5)
 
         # === 初始化 OCREngine ===
         self.engine = OCREngine()
