@@ -36,7 +36,7 @@
 
 ## Tasks
 
-- [ ] 1. 建立 .gitignore 與 requirements.txt
+- [x] 1. 建立 .gitignore 與 requirements.txt
   - Files: `.gitignore`, `requirements.txt`
   - 建立 `.gitignore`，包含：`venv/`, `__pycache__/`, `*.pyc`, `.idea/`, `.vscode/`, `*.egg-info/`
   - 建立 `requirements.txt`，列出相依套件：`pytesseract`, `Pillow`
